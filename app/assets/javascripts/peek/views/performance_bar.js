@@ -141,9 +141,9 @@ let renderPerformanceBar = function() {
 var updateStatus = html => $('#serverstats').html(html);
 
 let ajaxStart = null;
-$(document).on('pjax:start page:fetch turbolinks:request-start', event => ajaxStart = event.timeStamp);
+$(document).on('pjax:start page:fetch turbolinks:request-start turbo:before-visit', event => ajaxStart = event.timeStamp);
 
-$(document).on('pjax:end page:load turbolinks:load', function(event, xhr) {
+$(document).on('pjax:end page:load turbolinks:load turbo:load', function(event, xhr) {
   if (ajaxStart == null) { return; }
   let ajaxEnd    = event.timeStamp;
   let total      = ajaxEnd - ajaxStart;
@@ -169,6 +169,8 @@ $(document).on('pjax:end page:load turbolinks:load', function(event, xhr) {
 
     if ($.fn.pjax != null) {
       tech = 'PJAX';
+    } else if (window.Turbo && window.Turbo.visit) {
+      tech = 'Turbo'
     } else {
       tech = 'Turbolinks';
     }
