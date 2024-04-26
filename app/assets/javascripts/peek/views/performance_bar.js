@@ -152,7 +152,7 @@ $(document).on('pjax:end page:load turbolinks:load', function(event, xhr) {
   // Defer to include the timing of pjax hook evaluation
   return setTimeout(function() {
     let tech;
-    let now = new Date().getTime();
+    let now = performance.now()
     let bar = new PerformanceBar({
       timing: {
         requestStart: ajaxStart,
